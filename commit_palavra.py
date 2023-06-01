@@ -1,14 +1,14 @@
 from github import Github
 import base64
-import re
 import pandas as pd
+import re
 
 
-acess_token="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"
+acess_token="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"
 
 g=Github(acess_token)
 
-repo =g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
+repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 
 
 def commit_palavra(string: str):
@@ -23,7 +23,7 @@ def commit_palavra(string: str):
 
         commit_message = commit.commit.message
         #re.search(palavra, commit_message,re.IGNORECASE)!=None:
-        
+
         if string in commit_message:
             
             hashes.append(commit.sha[:6])
@@ -37,5 +37,5 @@ def commit_palavra(string: str):
     return df
 
 
-teste = 'commitando'
-print(commit_palavra(teste))
+
+print(commit_palavra('Criando'))
