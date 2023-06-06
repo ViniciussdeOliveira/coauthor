@@ -4,7 +4,7 @@ import pandas as pd
 import re
 
 
-acess_token="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"
+acess_token="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"
 
 g=Github(acess_token)
 
@@ -27,7 +27,7 @@ def commit_palavra(string: str):
         if string in commit_message:
             
             hashes.append(commit.sha[:6])
-            authors.append(commit.author.name)
+            authors.append(commit.commit.author.name)
             messages.append(commit.commit.message)
 
  
@@ -35,7 +35,3 @@ def commit_palavra(string: str):
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
     return df
-
-
-
-print(commit_palavra('Criando'))
