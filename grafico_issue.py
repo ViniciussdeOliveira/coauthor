@@ -2,10 +2,11 @@ from github import Github
 import base64
 import pandas as pd
 import re
-import matplotlib
+import matplotlib.pyplot as plt
 import datetime
 
-acess_token="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"
+#  Colocar o seu token aqui
+acess_token=""
 
 g=Github(acess_token)
 
@@ -18,8 +19,6 @@ def issues_month(star_date: str, end_date: str):
 
     issues = repo.get_issues(state='closed')
     
-    issues_list =[]
-    
     count=[]
 
 
@@ -30,11 +29,14 @@ def issues_month(star_date: str, end_date: str):
                 contador+=1
         count.append(contador)
 
-    df = pd.DataFrame({"num issues": count},index=months_list)    
+    df = pd.DataFrame({"num_issues": count},index=months_list)    
 
 
 
-    print(df)
-   
-
-issues_month('2022-05-05','2023-12-06')
+    # print(df)
+    plt.bar(months_list, df['num_issues'])
+    plt.xlabel('num_issues')
+    plt.ylabel('months_list')
+    plt.title('Issues per month')
+    plt.xticks(rotation=45)
+    plt.show()

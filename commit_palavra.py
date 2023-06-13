@@ -4,7 +4,7 @@ import pandas as pd
 import re
 
 
-acess_token="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"
+acess_token=""
 
 g=Github(acess_token)
 
