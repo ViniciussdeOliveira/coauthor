@@ -1,9 +1,2 @@
-# from mainCopy import *
-# from commit_palavra import *
-from grafico_issue import *
-
-# word = commit_palavra('Criando')
-# print(word)
-
-# get_coAuthor()
-issues_month('2022-05-05','2023-12-06')
+from commit_palavra import *
+calculate_commit_average("03-20-2023","06-28-2023")
