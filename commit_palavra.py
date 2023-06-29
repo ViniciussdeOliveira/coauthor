@@ -98,11 +98,11 @@ def check_extension(star_date: str, end_date: str):
                 author = commit.author.login
                 file_modify = commit.files
 
-            for file in file_modify:
-                extension = file.filename.split('.')[-1]
-                filename = file.filename
+                for file in file_modify:
+                    extension = file.filename.split('.')[-1]
+                    filename = file.filename
 
-                extension_by_author[author][extension].append(filename)
+                    extension_by_author[author][extension].append(filename)
         
         content = '## File Extensions Report by Author\n\n'
 
@@ -139,17 +139,22 @@ def get_coAuthor(star_date: str, end_date: str):
         if commit_date_str >= star_date and commit_date_str <= end_date:
             commit_message = commit.commit.message
         
-        if 'Co-authored-by:' in commit_message:
-            hashes.append(commit.commit.sha[:6])
-            authors.append(commit.commit.author.name)
+            if 'Co-authored-by:' in commit_message:
+                hashes.append(commit.commit.sha[:6])
+                authors.append(commit.commit.author.name)
 
-            lines = commit_message.splitlines()
-            aux=[]
-            for line in lines:
-                if line.startswith('Co-authored-by:'):
-                    aux.append(line[16:].strip().split('<')[0])
-            coauthors.append(aux)
+                lines = commit_message.splitlines()
+                aux=[]
+                for line in lines:
+                    if line.startswith('Co-authored-by:'):
+                        aux.append(line[16:].strip().split('<')[0])
+                coauthors.append(aux)
 
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
+
+    if df.empty is False:
+        return df
+    else:
+        msg = "0 commits with Coauthors"
+        return msg
     
-    return df
