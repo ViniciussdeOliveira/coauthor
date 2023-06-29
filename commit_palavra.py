@@ -20,141 +20,89 @@ g=Github(github_token)
 repo = g.get_repo(repos)
 
 
-def issues_month(star_date: str, end_date: str):
-    
-    months_list = pd.period_range(start =star_date,end=end_date, freq='M')
-    months_list = [month.strftime("%b-%Y") for month in months_list]
+def commit_palavra(string: str, start_date: str, end_date: str):
 
-    issues = repo.get_commits()
-    
-    count=0
-
-    for issue in issues:
-        issue_date = issue.commit.author.date
-        issue_date_str = datetime.strftime(issue_date, "%m-%d-%Y")
-        if issue_date_str >= star_date and issue_date_str <= end_date:
-            count+=1
-    print(count)
-
-
-def calculate_commit_average(star_date: str, end_date: str):
-
-    commits = repo.get_commits()
-    
-    commits_count = defaultdict(int)
-    
-    for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= star_date and commit_date_str <= end_date:
-            author = commit.author
-            name = author.login if author else "Unknown"
-        
-            # Incrementa o numero de commits do autor
-            commits_count[name] += 1
-        
-
-    total_commits = sum(commits_count.values())
-    qtd_user = len(commits_count)
-
-    average_total = total_commits / qtd_user
-
-    data = {'Author': [], 'Commits': []}
-
-    for author, num_commits in commits_count.items():
-        data['Author'].append(author)
-        data['Commits'].append(num_commits)
-    
-    df = pd.DataFrame(data)
-    df = df.sort_values(by='Commits', ascending=False)
-
-    print(df)
-
-    df['Average'] = average_total # df da media total
-
-    # Plotar um gráfico com as média de cada user
-
-    plt.bar(df['Author'], df['Commits'])
-    plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
-    plt.xlabel('Author')
-    plt.ylabel('Commits')
-    plt.title('Commits per Author')
-    plt.legend()
-    plt.xticks(rotation=45)
-    plt.show()
-
-    return df
-
-def check_extension(star_date: str, end_date: str):
-    try:
-        extension_by_author = defaultdict(lambda: defaultdict(list))
-        
-        commits = repo.get_commits()
-
-        for commit in commits:
-            commit_date = commit.commit.author.date
-            commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-            if commit_date_str >= star_date and commit_date_str <= end_date:
-                author = commit.author.login
-                file_modify = commit.files
-
-                for file in file_modify:
-                    extension = file.filename.split('.')[-1]
-                    filename = file.filename
-
-                    extension_by_author[author][extension].append(filename)
-        
-        content = '## File Extensions Report by Author\n\n'
-
-        for author, extensions in extension_by_author.items():
-            content += f'## Author: {author} \n\n'
-            content += '| Extension / Files |\n'
-            content += '| -------- | \n'
-            for extension, files in extensions.items():
-                file_list = '| \n'.join(files)
-                content += f'| **{extension}** | \n'
-                content += f' {file_list} | \n'
-            content += "\n"
-
-        output = 'arquivo.md'
-
-        with open(output, 'w', encoding='utf-8') as f:
-            f.write(content)
-
-    except Exception as e:
-        print(f'Ocorreu um erro: {e}')
-
-    return content
-
-def get_coAuthor(star_date: str, end_date: str):
-    coauthors = []
     hashes = []
+    messages = []
     authors = []
-    
+
     commits = repo.get_commits()
 
     for commit in commits:
         commit_date = commit.commit.author.date
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= star_date and commit_date_str <= end_date:
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+
             commit_message = commit.commit.message
-        
-            if 'Co-authored-by:' in commit_message:
-                hashes.append(commit.commit.sha[:6])
+
+            if string.lower() in commit_message.lower():
+
+                hashes.append(commit.sha[:6])
                 authors.append(commit.commit.author.name)
+                messages.append(commit.commit.message)
 
-                lines = commit_message.splitlines()
-                aux=[]
-                for line in lines:
-                    if line.startswith('Co-authored-by:'):
-                        aux.append(line[16:].strip().split('<')[0])
-                coauthors.append(aux)
-
-    df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
+    df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
     if df.empty is False:
         return df
     else:
-        msg = "0 commits with Coauthors"
+        msg = "No commits with this word"
         return msg
     
+def get_commits_by_user(usuario: str, start_date: str, end_date: str):
+    hashes = []
+    messages = []
+
+    commits = repo.get_commits()
+    for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            if commit.author.login.lower() == usuario.lower():
+                messages.append(commit.commit.message)
+                hashes.append(commit.sha[:6])
+
+    df = pd.DataFrame({"Message":messages}, index=hashes)     
+
+    if df.empty is False:
+        return df
+    else:
+        msg = "No commits with this user"
+        return msg
+
+
+def title_commits(start_date: str, end_date: str):
+
+    commits = repo.get_commits()
+
+    commit_titles = defaultdict(lambda: defaultdict(list))
+
+    for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author
+            if author:
+                author_name = author.login
+            else:
+                author_name = 'Unknown'
+
+            commit_title = commit.commit.message.splitlines()[0]
+
+            if author_name in commit_titles:
+                commit_titles[author_name].append(commit_title)
+            else:
+                commit_titles[author_name] = [commit_title]
+
+    content = '#File Title Commits\n\n'
+    for author, titles in commit_titles.items():
+        content += f'## Usuário: {author}\n'
+        content += f'### Títulos do commits:\n'
+        for title in titles:
+            content += f'- {title}\n'
+        content += '\n'
+    
+    output = 'arquivo_title.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content)

@@ -1,2 +1,3 @@
 from commit_palavra import *
-check_extension("06-22-2023","06-23-2023")
+
+print(get_commits_by_user("gzaranza","06-22-2023","06-29-2023"))
