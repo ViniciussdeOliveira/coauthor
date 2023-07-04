@@ -315,9 +315,11 @@ def relatorio_basico(start_date: str, end_date: str):
     content = '## Relatório\n\n'
 
     usuarios = get_usuario_commit(start_date, end_date)
-    usuarios = usuarios.to_string(index=False)
-    content += usuarios
-    content += '\n\n'
+    for indice, linhas in usuarios.iterrows():
+        for coluna, valor in linhas.items():
+            content += f'|{valor}'
+            nada = {coluna}
+        content += '\n\n'
 
     content += '## Lista de Commits com Coautor\n\n'
 
