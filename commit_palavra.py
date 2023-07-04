@@ -297,7 +297,8 @@ def titulo_commits(start_date: str, end_date: str):
             else:
                 commit_titulos[autor_name] = [commit_title]
 
-    content = '#File Title Commits\n\n'
+    content = ''
+
     for autor, titles in commit_titulos.items():
         content += f'## Usuário: {autor}\n'
         content += f'### Títulos do commits:\n'
@@ -305,17 +306,13 @@ def titulo_commits(start_date: str, end_date: str):
             content += f'- {title}\n'
         content += '\n'
 
-    output = 'arquivo_title.md'
-
-    with open(output, 'w', encoding='utf-8') as f:
-        f.write(content)
-
+    return content
 
 def relatorio_basico(start_date: str, end_date: str):
     content = '## Relatório do dia: ' + start_date + ' até ' + end_date
     content += '\n\n'
 
-    content += '### Pessoas que fizeram commits:'
+    content += '### Pessoas que fizeram commits:\n\n'
 
     usuarios = get_usuario_commit(start_date, end_date)
     for indice, linhas in usuarios.iterrows():
@@ -324,7 +321,10 @@ def relatorio_basico(start_date: str, end_date: str):
             nada = {coluna}
         content += '\n\n'
 
-    content += '## Lista de Commits com Coautor\n\n'
+    content += '### Lista dos commits:\n\n'
+    content += titulo_commits(start_date, end_date)
+
+    content += '### Lista de Commits com Coautor:\n\n'
 
     coaut = get_coAutor(start_date, end_date)
 
