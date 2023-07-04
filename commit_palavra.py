@@ -312,7 +312,10 @@ def titulo_commits(start_date: str, end_date: str):
 
 
 def relatorio_basico(start_date: str, end_date: str):
-    content = '## Relatório\n\n'
+    content = '## Relatório do dia: ' + start_date + ' até ' + end_date
+    content += '\n\n'
+
+    content += '### Pessoas que fizeram commits:'
 
     usuarios = get_usuario_commit(start_date, end_date)
     for indice, linhas in usuarios.iterrows():
@@ -323,9 +326,7 @@ def relatorio_basico(start_date: str, end_date: str):
 
     content += '## Lista de Commits com Coautor\n\n'
 
-    """ # Parte funcionando COAUTHOR ------------------------------------------
-
-    coaut = get_coAutor()
+    coaut = get_coAutor(start_date, end_date)
 
     content += '| Hash | Autor | Coautor |\n'
     content += '|------|-------|---------|\n'
@@ -338,10 +339,8 @@ def relatorio_basico(start_date: str, end_date: str):
         content += '|\n'
 
     content += '\n\n'
-
-    # Parte funcionando COAUTHOR ------------------------------------------
-
-    # Parte Média ---------------------------------------------------------
+     
+    """# Parte Média ---------------------------------------------------------
 
     content += '## Commits por pessoa e Média Geral\n\n'
     commits = calcular_media_commits()
