@@ -181,18 +181,20 @@ def commit_data(data: str):
         if commit_data_str == data:
             hashes.append(commit.sha[:6])
             autores.append(commit.commit.author.name)
-            mensages.append(commit.commit.message)
+            mensagem = commit.commit.message
+            mensagem = mensagem.split("\n")[0]
+            mensages.append(mensagem)
 
     # columns = ['hash', 'message', 'author']
     # df = pd.DataFrame({"message": mensages, "author": autores}, index=hashes)
 
-    content = '# Commits na data: {data} \n\n'
+    content = '# Commits na data: ' + data + '\n\n'
 
     for autor, message in zip(autores, mensages):
         content += f'## Autor: {autor} \n\n'
 
-        content += '| -------- | \n'
-        content += f'## Messages: {message} \n\n'
+        content += f'| Messages | \n\n'
+        content += f'| {message} | \n\n'
 
         content += '| -------- | \n'
         content += "\n"
