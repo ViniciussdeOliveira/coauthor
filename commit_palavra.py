@@ -168,41 +168,41 @@ def calcular_media_commits(start_date: str, end_date: str):
     return df
 
 def commit_data(data: str):
-    hashes = []
-    mensages = []
-    autores = []
-
+    
     commits = repo.get_commits()
+
+    commit_data = defaultdict(lambda: defaultdict(list))
 
     for commit in commits:
         commit_data = commit.commit.author.date
         commit_data_str = datetime.strftime(commit_data, "%m-%d-%Y")
-
         if commit_data_str == data:
-            hashes.append(commit.sha[:6])
-            autores.append(commit.commit.author.name)
-            mensagem = commit.commit.message
-            mensagem = mensagem.split("\n")[0]
-            mensages.append(mensagem)
+            autor = commit.author
+            if autor:
+                autor_name = autor.login
+            else:
+                autor_name = 'Unknown'
 
-    # columns = ['hash', 'message', 'author']
-    # df = pd.DataFrame({"message": mensages, "author": autores}, index=hashes)
+            commit_title = commit.commit.message.splitlines()[0]
 
-    content = '# Commits na data: ' + data + '\n\n'
+            if autor_name in commit_data:
+                commit_data[autor_name].append(commit_title)
+            else:
+                commit_data[autor_name] = [commit_title]
 
-    for autor, message in zip(autores, mensages):
-        content += f'## Autor: {autor} \n\n'
-
-        content += f'### Messages | \n\n'
-        content += f'- {message} \n\n'
-        content += "\n"
+    content = '#File Title Commits\n\n'
+    for autor, titles in commit_data.items():
+        content += f'## Usuário: {autor}\n'
+        content += f'### Títulos do commits:\n'
+        for title in titles:
+            content += f'- {title}\n'
+        content += '\n'
 
     output = 'arquivo_data.md'
 
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
 
-    #return df
 
 def commit_palavra(string: str, start_date: str, end_date: str):
 
