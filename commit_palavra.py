@@ -321,10 +321,11 @@ def relatorio_basico(start_date: str, end_date: str):
             nada = {coluna}
         content += '\n\n'
 
-    content += '### Lista dos commits:\n\n'
+    content += '# Lista dos commits:\n\n'
     content += titulo_commits(start_date, end_date)
+    content += '\n\n'
 
-    content += '### Lista de Commits com Coautor:\n\n'
+    content += '# Lista de Commits com Coautor:\n\n'
 
     coaut = get_coAutor(start_date, end_date)
 
@@ -340,26 +341,20 @@ def relatorio_basico(start_date: str, end_date: str):
 
     content += '\n\n'
      
-    """# Parte Média ---------------------------------------------------------
+    content += '# Commits por pessoa e Média Geral\n\n'
+    commits = calcular_media_commits(start_date, end_date)
+    graph_path = 'media_commits.png'
 
-    content += '## Commits por pessoa e Média Geral\n\n'
-    commits = calcular_media_commits()
-    graph_path = 'commit_average_graph.png'
-
-    content += '| índice | Autor | Commits | Média |\n'
-    content += '|--------|-------|---------|-------|\n'
+    content += '| Autor | Commits | Média |\n'
+    content += '|-------|---------|-------|\n'
 
     for indice, linha in commits.iterrows():
-        content += f'|{indice}'
         for coluna, valor in linha.items():
             content += f'|{valor}'
             nada = {coluna}
         content += '|\n'
 
-    content += '\n\n'
-    # print(content)
-
-    content += f'![Commit Average Graph]({graph_path})\n\n' """
+    content += f'![Grafico media commit]({graph_path})\n\n'
     output = 'relatorio.md'
 
     with open(output, 'w', encoding='utf-8') as f:

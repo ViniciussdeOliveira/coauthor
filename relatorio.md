@@ -12,7 +12,7 @@
 
 - gabrielrosa09
 
-### Lista dos commits:
+# Lista dos commits:
 
 ## Usuário: lucaslobao-18
 ### Títulos do commits:
@@ -40,7 +40,9 @@
 - Merge branch 'issue_39' of https://github.com/fga-eps-mds/2023.1-RelatorioGitPython into issue_39
 - Merge branch 'main' of https://github.com/fga-eps-mds/2023.1-RelatorioGitPython into issue_39
 
-### Lista de Commits com Coautor:
+
+
+# Lista de Commits com Coautor:
 
 | Hash | Autor | Coautor |
 |------|-------|---------|
@@ -50,4 +52,15 @@
 |e41bae|Vinicius de Oliveira Santos|['Gabriel Zaranza ']|
 |8c3f5d|Vinicius de Oliveira Santos|['Gabriel Zaranza ']|
 
+
+# Commits por pessoa e Média Geral
+
+| Autor | Commits | Média |
+|-------|---------|-------|
+|gabrielrosa09|4|2.2|
+|ViniciussdeOliveira|3|2.2|
+|GZaranza|2|2.2|
+|lucaslobao-18|1|2.2|
+|rafa-kenji|1|2.2|
+![Grafico media commit](media_commits.png)
 
