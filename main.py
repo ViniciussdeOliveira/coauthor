@@ -1,3 +1,3 @@
 from commit_palavra import *
 
-calcular_media_commits("06-22-2023","06-29-2023")
+issues_fechadas("02-22-2023","06-29-2023")

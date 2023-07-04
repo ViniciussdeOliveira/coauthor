@@ -116,8 +116,8 @@ def issues_fechadas(start_date: str, end_date: str):
     plt.ylabel('Issues')
     plt.title('Issues por mes')
     plt.yticks(range(0,max(df['num_issues']+1)))
-    plt.xticks(rotation=45)
-    plt.show()
+    plt.xticks(rotation=13)
+    plt.savefig('issues_fechadas.png', format='png')
 
 def calcular_media_commits(start_date: str, end_date: str):
 
