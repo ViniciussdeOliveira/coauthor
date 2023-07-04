@@ -354,6 +354,8 @@ def relatorio_basico(start_date: str, end_date: str):
             nada = {coluna}
         content += '|\n'
 
+    content += '\n'
+
     content += f'![Grafico media commit]({graph_path})\n\n'
     output = 'relatorio.md'
 

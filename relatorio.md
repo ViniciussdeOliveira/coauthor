@@ -62,5 +62,6 @@
 |GZaranza|2|2.2|
 |lucaslobao-18|1|2.2|
 |rafa-kenji|1|2.2|
+
 ![Grafico media commit](media_commits.png)
 
