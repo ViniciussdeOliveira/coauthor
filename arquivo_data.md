@@ -2,25 +2,22 @@
 
 ## Autor: GZaranza 
 
-| Messages | 
+### Messages | 
 
-| testando o gerador de relatorio | 
+- testando o gerador de relatorio 
 
-| -------- | 
 
 ## Autor: Vinicius de Oliveira Santos 
 
-| Messages | 
+### Messages | 
 
-| Fix: Arrumando a saída da função gerar_relatorio() na gitInfo.py | 
+- Fix: Arrumando a saída da função gerar_relatorio() na gitInfo.py 
 
-| -------- | 
 
 ## Autor: FelipeDireito 
 
-| Messages | 
+### Messages | 
 
-| Merge pull request #59 from fga-eps-mds/issue_41 | 
+- Merge pull request #59 from fga-eps-mds/issue_41 
 
-| -------- | 
 

@@ -193,10 +193,8 @@ def commit_data(data: str):
     for autor, message in zip(autores, mensages):
         content += f'## Autor: {autor} \n\n'
 
-        content += f'| Messages | \n\n'
-        content += f'| {message} | \n\n'
-
-        content += '| -------- | \n'
+        content += f'### Messages | \n\n'
+        content += f'- {message} \n\n'
         content += "\n"
 
     output = 'arquivo_data.md'
