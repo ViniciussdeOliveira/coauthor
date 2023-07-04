@@ -109,8 +109,6 @@ def issues_fechadas(start_date: str, end_date: str):
     df = pd.DataFrame({"num_issues": count},index=lista_mes)
 
 
-    #print(df)
-
     plt.bar(lista_mes, df['num_issues'])
     plt.xlabel('Meses')
     plt.ylabel('Issues')
@@ -118,6 +116,8 @@ def issues_fechadas(start_date: str, end_date: str):
     plt.yticks(range(0,max(df['num_issues']+1)))
     plt.xticks(rotation=13)
     plt.savefig('issues_fechadas.png', format='png')
+
+    return df
 
 def calcular_media_commits(start_date: str, end_date: str):
 
@@ -311,15 +311,17 @@ def titulo_commits(start_date: str, end_date: str):
         f.write(content)
 
 
-def gerar_relatorio():
-    content = '## Relatório Geral\n\n'
+def relatorio_basico(start_date: str, end_date: str):
+    content = '## Relatório\n\n'
 
-    content += checar_arquivos()
+    usuarios = get_usuario_commit(start_date, end_date)
+    usuarios = usuarios.to_string(index=False)
+    content += usuarios
     content += '\n\n'
 
     content += '## Lista de Commits com Coautor\n\n'
 
-    # Parte funcionando COAUTHOR ------------------------------------------
+    """ # Parte funcionando COAUTHOR ------------------------------------------
 
     coaut = get_coAutor()
 
@@ -356,8 +358,8 @@ def gerar_relatorio():
     content += '\n\n'
     # print(content)
 
-    content += f'![Commit Average Graph]({graph_path})\n\n'
-    output = 'relatorio_geral.md'
+    content += f'![Commit Average Graph]({graph_path})\n\n' """
+    output = 'relatorio.md'
 
     with open(output, 'w', encoding='utf-8') as f:
 

@@ -1,3 +1,3 @@
 from commit_palavra import *
 
-commit_data("06-18-2023")
+relatorio_basico("06-18-2023","06-22-2023")
