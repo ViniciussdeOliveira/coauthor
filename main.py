@@ -1,3 +1,3 @@
 from commit_palavra import *
 
-print(get_commits_by_user("gzaranza","06-22-2023","06-29-2023"))
+print(get_usuario_commit("06-22-2023","06-29-2023"))
