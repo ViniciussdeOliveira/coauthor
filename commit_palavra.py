@@ -141,7 +141,7 @@ def calcular_media_commits(start_date: str, end_date: str):
 
     media_total = total_commits / qtd_usuario
 
-    data = {'Author': [], 'Commits': []}
+    data = {'Autor': [], 'Commits': []}
 
     for autor, num_commits in commits_count.items():
         data['Autor'].append(autor)
@@ -150,20 +150,20 @@ def calcular_media_commits(start_date: str, end_date: str):
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    print(df)
-
     df['media'] = media_total # df da media total
 
-    # Plotar um gráfico com as média de cada user
+    # print(df)
+
+
+    # Plotar um gráfico com as média de cada usuario
 
     plt.bar(df['Autor'], df['Commits'])
     plt.axhline(y=media_total, color='r', linestyle='-', label='media')
     plt.xlabel('Autor')
     plt.ylabel('Commits')
     plt.title('Commits por Autor')
-    plt.legend()
-    plt.xticks(rotation=45)
-    plt.show()
+    plt.xticks(rotation=13)
+    plt.savefig('media_commits.png', format='png')
 
     return df
 
