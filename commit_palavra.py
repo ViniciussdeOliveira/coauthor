@@ -15,12 +15,10 @@ load_dotenv()
 github_token = os.getenv('GITHUB_TOKEN')
 #dando acesso a biblioteca
 g=Github(github_token)
+#pegando o token do github
+repositorio = os.getenv('REPOS')
 #escolhendo o repositorio a ser analisado
 repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
-
-current_working_directory = os.getcwd()
-repository_path = discover_repository(current_working_directory)
-repository = Repository(repository_path)
 
 
 def get_commits_by_user(usuario: str, start_date: str, end_date: str):
