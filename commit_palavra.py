@@ -150,12 +150,7 @@ def calcular_media_commits(start_date: str, end_date: str):
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    df['media'] = media_total # df da media total
-
-    # print(df)
-
-
-    # Plotar um gráfico com as média de cada usuario
+    df['media'] = media_total 
 
     plt.bar(df['Autor'], df['Commits'])
     plt.axhline(y=media_total, color='r', linestyle='-', label='media')
@@ -190,7 +185,7 @@ def commit_data(data: str):
             else:
                 commit_data[autor_name] = [commit_title]
 
-    content = '#File Title Commits\n\n'
+    content = '#Commits do dia ' + data + '\n\n'
     for autor, titles in commit_data.items():
         content += f'## Usuário: {autor}\n'
         content += f'### Títulos do commits:\n'
@@ -202,6 +197,8 @@ def commit_data(data: str):
 
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
+
+    return content
 
 
 def commit_palavra(string: str, start_date: str, end_date: str):
@@ -252,7 +249,7 @@ def checar_arquivos(start_date: str, end_date: str):
 
                     extensao_por_autor[autor][extensao].append(filename)
 
-        content = '## File Extensions Report by Author\n\n'
+        content = '## Extensões de Arquivos de cada autor\n\n'
 
         for autor, extensions in extensao_por_autor.items():
             content += f'## Autor: {autor} \n\n'
@@ -264,7 +261,7 @@ def checar_arquivos(start_date: str, end_date: str):
                 content += f' {file_list} | \n'
             content += "\n"
 
-        output = 'arquivo.md'
+        output = 'checar_arquivos.md'
 
         with open(output, 'w', encoding='utf-8') as f:
             f.write(content)
@@ -386,6 +383,4 @@ def issues_abertas():
         if not issue.assignee:
             content += f'|{issue.title}|{issue.number}|\n'
 
-    #Para testar a saída, descomente o print
-    # print(content)
     return content
