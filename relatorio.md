@@ -1,14 +1,14 @@
 ## Relatório
 
-|lucaslobao-18
+- lucaslobao-18
 
-|rafa-kenji
+- rafa-kenji
 
-|GZaranza
+- GZaranza
 
-|ViniciussdeOliveira
+- ViniciussdeOliveira
 
-|gabrielrosa09
+- gabrielrosa09
 
 ## Lista de Commits com Coautor
 

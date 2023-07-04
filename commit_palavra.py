@@ -317,7 +317,7 @@ def relatorio_basico(start_date: str, end_date: str):
     usuarios = get_usuario_commit(start_date, end_date)
     for indice, linhas in usuarios.iterrows():
         for coluna, valor in linhas.items():
-            content += f'|{valor}'
+            content += f'- {valor}'
             nada = {coluna}
         content += '\n\n'
 
